@@ -1,0 +1,17 @@
+# General
+.DS_Store
+.env
+.docker-compose.override.yml
+
+# Frontend
+frontend/node_modules/
+frontend/build/
+
+# Backend
+backend/__pycache__/
+backend/*.pyc
+backend/venv/
+backend/.env
+
+# Database
+postgres_data/

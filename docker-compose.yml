@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15
+    container_name: emotales_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: storydb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build: ./backend
+    container_name: emotales_backend
+    restart: always  # Ye line connection error ko hal karegi
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./backend/.env
+    depends_on:
+      - db
+
+  frontend:
+    build: ./frontend
+    container_name: emotales_frontend
+    ports:
+      - "3000:3000"
+    stdin_open: true # React development mode ke liye zaroori hai
+    tty: true
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
